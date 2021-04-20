@@ -5,33 +5,24 @@ const inquirer = require("inquirer");
 const fs = require("fs");
 
 const teamMember =[];
-let html = ''
+let html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <title>Team Members</title>
+</head>
+<body>
+    <div class="jumbotron">
+        <h1 class="display-4">Team Members</h1>
+      </div>
+literals go here
+</body>
+</html>`
 
-function addEmployee (){
-    inquirer.prompt([
-       
-        {
-           type: 'list',
-           message: 'What is the employee role?',
-           name: 'role',
-           choices: ["Manager", "Engineer", "Intern"],
-         },])
-     .then ((response) => {
-       var role = response.role;
-       var html = ``;
-       if (role==="Manager"){getManager};
-       if (role==="Engineer"){getEngineer};
-       if (role==="Intern"){getIntern};
-       
-       fs.writeFile('index.html', html , (err) => 
-       err ? console.error(err) : console.log('success')
-       
-       );
-   
-   
-   })
 
-}
 
 function addTeamMember () {
     inquirer.prompt([
@@ -39,20 +30,29 @@ function addTeamMember () {
          {
             type: 'list',
             message: 'Would you like to add a new Employee?',
-            name: 'addEmployee',
+            name: 'addemployee',
             choices: ["YES", "NO"],
           },])
       .then ((response) => {
-        var addEmployee = response.addEmployee;
-        var html = ``;
-        if (addEmployee==="YES"){addEmployee()
-        };
-        if (addEmployee==="NO"){console.log(goodbye)};
-        
-        fs.writeFile('index.html', html , (err) => 
-        err ? console.error(err) : console.log('success')
-        
-        );
+        var addEmployee = response.addemployee;
+        if (addEmployee==="YES"){inquirer.prompt([
+       
+            {
+               type: 'list',
+               message: 'What is the employee role?',
+               name: 'role',
+               choices: ["Manager", "Engineer", "Intern"],
+             },])
+         .then ((response) => {
+           var role = response.role;
+           if (role==="Manager"){getManager()};
+           if (role==="Engineer"){getEngineer()};
+           if (role==="Intern"){getIntern()};
+       
+       
+       })
+    };
+        if (addEmployee==="NO"){console.log(teamMember)};
     
     
     })
@@ -88,7 +88,7 @@ function getManager(){
      .then ((response) => {
        var managerName = response.managername;
        var managerID = response.managerid;
-       var managerEmail = response.email;
+       var managerEmail = response.manageremail;
        var managerOfficeNumber = response.managerofficenumber;
        var managerCard = `<div class="card" style="width: 18rem;">
        <img src="..." class="card-img-top" alt="...">
@@ -104,7 +104,7 @@ function getManager(){
          Email: <a href="mailto: ${managerEmail}" class="card-link">${managerEmail}</a>
        </div>
      </div>`;
-       var manager = new Manager(managerName, managerID, managerEmail, managerOfficeNumber)
+       var manager = new Manager(response.managername, response.managerid, response.manageremail, response.managerofficenumber)
        teamMember.push(manager);
        addTeamMember();
    })
@@ -117,17 +117,17 @@ function getEngineer(){
         {
            type: 'input',
            message: 'What is the engineers name?',
-           name: 'managername',
+           name: 'engineername',
          },
          {
             type: 'input',
             message: 'What is the engineers ID?',
-            name: 'managerid',
+            name: 'engineerid',
           },
           {
             type: 'input',
-            message: 'What is the managers email',
-            name: 'manageremail',
+            message: 'What is the engineers email',
+            name: 'engineeremail',
           },
           {
             type: 'input',
@@ -211,4 +211,7 @@ function getIntern(){
 
 }
 
-addEmployee();
+
+
+
+addTeamMember();
