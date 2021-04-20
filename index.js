@@ -144,7 +144,7 @@ function getEngineer(){
        <img src="..." class="card-img-top" alt="...">
        <div class="card-body">
          <h5 class="card-title">${engineerName}</h5>
-         <p class="card-text">Manager</p>
+         <p class="card-text">Engineer</p>
        </div>
        <ul class="list-group list-group-flush">
        <li class="list-group-item">ID: ${engineerID}</li> 
@@ -156,6 +156,56 @@ function getEngineer(){
      </div>`;
        var engineer = new Engineer(engineerName, engineerID, engineerEmail, github)
        teamMember.push(engineer);
+       addTeamMember();
+   })
+
+}
+
+function getIntern(){
+    inquirer.prompt([
+       
+        {
+           type: 'input',
+           message: 'What is the interns name?',
+           name: 'internname',
+         },
+         {
+            type: 'input',
+            message: 'What is the interns ID?',
+            name: 'internid',
+          },
+          {
+            type: 'input',
+            message: 'What is the interns email',
+            name: 'internemail',
+          },
+          {
+            type: 'input',
+            message: 'What is the interns school',
+            name: 'school',
+          },
+        ])
+     .then ((response) => {
+       var internName = response.internname;
+       var internID = response.internid;
+       var internEmail = response.internemail;
+       var school = response.school;
+       var engineerCard = `<div class="card" style="width: 18rem;">
+       <img src="..." class="card-img-top" alt="...">
+       <div class="card-body">
+         <h5 class="card-title">${internName}</h5>
+         <p class="card-text">Intern</p>
+       </div>
+       <ul class="list-group list-group-flush">
+       <li class="list-group-item">ID: ${internID}</li> 
+       <li class="list-group-item">School: ${school}</li> 
+       </ul>
+       <div class="card-body">
+         Email: <a href="mailto: ${internEmail}" class="card-link">${internEmail}</a>
+       </div>
+     </div>`;
+       var intern = new Intern(internName, internID, internEmail, school)
+       teamMember.push(intern);
        addTeamMember();
    })
 
