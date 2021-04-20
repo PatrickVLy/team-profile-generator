@@ -5,22 +5,32 @@ const inquirer = require("inquirer");
 const fs = require("fs");
 
 const teamMember =[];
-let html = `<!DOCTYPE html>
+const teamCards=[]
+let starthtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+
     <title>Team Members</title>
 </head>
 <body>
     <div class="jumbotron">
         <h1 class="display-4">Team Members</h1>
       </div>
-literals go here
+      <div class="row">`
+let endhtml=`</div>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 </body>
 </html>`
+
+
 
 
 
@@ -52,7 +62,15 @@ function addTeamMember () {
        
        })
     };
-        if (addEmployee==="NO"){console.log(teamMember)};
+        if (addEmployee==="NO"){
+            console.log(teamMember);
+            const bodyhtml = teamCards.join('');
+            fs.writeFile('index.html', starthtml+bodyhtml+endhtml, (err) => 
+            err ? console.error(err) : console.log('success')
+            
+            );
+        
+        };
     
     
     })
@@ -90,22 +108,25 @@ function getManager(){
        var managerID = response.managerid;
        var managerEmail = response.manageremail;
        var managerOfficeNumber = response.managerofficenumber;
-       var managerCard = `<div class="card" style="width: 18rem;">
-       <img src="..." class="card-img-top" alt="...">
+       var managerCard = `<div class="col-sm-4"><div class="card" style="width: 18rem;">
+       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eyeglasses" viewBox="0 0 16 16">
+  <path d="M4 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm2.625.547a3 3 0 0 0-5.584.953H.5a.5.5 0 0 0 0 1h.541A3 3 0 0 0 7 8a1 1 0 0 1 2 0 3 3 0 0 0 5.959.5h.541a.5.5 0 0 0 0-1h-.541a3 3 0 0 0-5.584-.953A1.993 1.993 0 0 0 8 6c-.532 0-1.016.208-1.375.547zM14 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/>
+</svg>
        <div class="card-body">
          <h5 class="card-title">${managerName}</h5>
          <p class="card-text">Manager</p>
        </div>
        <ul class="list-group list-group-flush">
-       <li class="list-group-item">Office Number: ${managerID}</li>  
+       <li class="list-group-item">ID: ${managerID}</li>  
        <li class="list-group-item">Office Number: ${managerOfficeNumber}</li>
        </ul>
        <div class="card-body">
          Email: <a href="mailto: ${managerEmail}" class="card-link">${managerEmail}</a>
        </div>
-     </div>`;
+     </div></div>`;
        var manager = new Manager(response.managername, response.managerid, response.manageremail, response.managerofficenumber)
        teamMember.push(manager);
+       teamCards.push(managerCard);
        addTeamMember();
    })
 
@@ -140,8 +161,10 @@ function getEngineer(){
        var engineerID = response.engineerid;
        var engineerEmail = response.engineeremail;
        var github = response.github;
-       var engineerCard = `<div class="card" style="width: 18rem;">
-       <img src="..." class="card-img-top" alt="...">
+       var engineerCard = `<div class="col-sm-4"><div class="card" style="width: 18rem;">
+       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cup" viewBox="0 0 16 16">
+  <path d="M1 2a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v1h.5A1.5 1.5 0 0 1 16 4.5v7a1.5 1.5 0 0 1-1.5 1.5h-.55a2.5 2.5 0 0 1-2.45 2h-8A2.5 2.5 0 0 1 1 12.5V2zm13 10h.5a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.5-.5H14v8zM13 2H2v10.5A1.5 1.5 0 0 0 3.5 14h8a1.5 1.5 0 0 0 1.5-1.5V2z"/>
+</svg>
        <div class="card-body">
          <h5 class="card-title">${engineerName}</h5>
          <p class="card-text">Engineer</p>
@@ -151,11 +174,12 @@ function getEngineer(){
        </ul>
        <div class="card-body">
          Email: <a href="mailto: ${engineerEmail}" class="card-link">${engineerEmail}</a>
-         Email: <a href="https://www.github.com/${github}" class="card-link">${engineerEmail}</a>
+         Github: <a href="https://www.github.com/${github}" class="card-link">${github}</a>
        </div>
-     </div>`;
+     </div></div>`;
        var engineer = new Engineer(engineerName, engineerID, engineerEmail, github)
        teamMember.push(engineer);
+       teamCards.push(engineerCard);
        addTeamMember();
    })
 
@@ -190,8 +214,10 @@ function getIntern(){
        var internID = response.internid;
        var internEmail = response.internemail;
        var school = response.school;
-       var engineerCard = `<div class="card" style="width: 18rem;">
-       <img src="..." class="card-img-top" alt="...">
+       var internCard = `<div class="col-sm-4"><div class="card" style="width: 18rem;">
+       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-emoji-dizzy-fill" viewBox="0 0 16 16">
+  <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zM4.146 5.146a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 1 1 .708.708l-.647.646.647.646a.5.5 0 1 1-.708.708L5.5 7.207l-.646.647a.5.5 0 1 1-.708-.708l.647-.646-.647-.646a.5.5 0 0 1 0-.708zm5 0a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708.708l-.647.646.647.646a.5.5 0 0 1-.708.708l-.646-.647-.646.647a.5.5 0 1 1-.708-.708l.647-.646-.647-.646a.5.5 0 0 1 0-.708zM8 13a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/>
+</svg>
        <div class="card-body">
          <h5 class="card-title">${internName}</h5>
          <p class="card-text">Intern</p>
@@ -203,9 +229,10 @@ function getIntern(){
        <div class="card-body">
          Email: <a href="mailto: ${internEmail}" class="card-link">${internEmail}</a>
        </div>
-     </div>`;
+     </div></div>`;
        var intern = new Intern(internName, internID, internEmail, school)
        teamMember.push(intern);
+       teamCards.push(internCard);
        addTeamMember();
    })
 
