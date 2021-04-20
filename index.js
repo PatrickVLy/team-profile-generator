@@ -57,3 +57,49 @@ function addEmployee (){
 
 }
 
+function getManager(){
+    inquirer.prompt([
+       
+        {
+           type: 'input',
+           message: 'What is the managers name?',
+           name: 'managername',
+         },
+         {
+            type: 'input',
+            message: 'What is the managers ID?',
+            name: 'managerid',
+          },
+          {
+            type: 'input',
+            message: 'What is the managers email',
+            name: 'manageremail',
+          },
+          {
+            type: 'input',
+            message: 'What is the managers office number',
+            name: 'managerofficenumber',
+          },
+        ])
+     .then ((response) => {
+       var managerName = response.managername;
+       var managerID = response.id;
+       var managerEmail = response.email;
+       var managerOfficeNumber = response.managerofficenumber;
+       var html = ``;
+       if (role==="Manager"){getManager};
+       if (role==="Engineer"){getEngineer};
+       if (role==="Intern"){getIntern};
+       
+       fs.writeFile('index.html', html , (err) => 
+       err ? console.error(err) : console.log('success')
+       
+       );
+   
+   
+   })
+
+var manager = new Manager(name, id, email, officeNumber)
+
+}
+
